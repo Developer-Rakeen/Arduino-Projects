@@ -1,0 +1,111 @@
+#include <Wire.h>
+#include <Adafruit_PWMServoDriver.h>
+
+Adafruit_PWMServoDriver Scontroller= Adafruit_PWMServoDriver();
+
+int servoMIN=150;
+int servoMAX=600;
+int servoMIN2=160;
+int servoMAX2=595;
+int servoMIN3=160;
+int servoMAX3=585;
+int servoMIN6=200;
+int servoMAX6=530;
+int servo;
+int readVal1;
+int angle1;
+int Ppin1=A0;
+int readVal2;
+int angle2;
+int Ppin2=A1;
+int pulse1;
+int pulse2;
+int readVal3;
+int angle3;
+int Ppin3=A2;
+int pulse3;
+int readVal4;
+int angle4;
+int Ppin4=A3;
+int pulse4;
+int readVal5;
+int angle5;
+int Ppin5=A6;
+int pulse5;
+int readVal6;
+int angle6;
+int Ppin6=A7;
+int pulse6;
+void setup() {
+  Serial.begin(9600);
+  Scontroller.begin();
+  Scontroller.setPWMFreq(60);
+  pinMode(Ppin1,INPUT);
+  pinMode(Ppin2,INPUT);
+  pinMode(Ppin3,INPUT);
+  pinMode(Ppin4,INPUT);
+  pinMode(Ppin5,INPUT);
+  pinMode(Ppin6,INPUT);
+}
+
+void loop() {
+  //Scontroller.setPWM(0,0,175);//560
+  //delay(2000);
+  readVal1=analogRead(Ppin1);
+  readVal2=analogRead(Ppin2);
+  readVal3=analogRead(Ppin3);
+  readVal4=analogRead(Ppin4);
+  readVal5=analogRead(Ppin5);
+  readVal6=analogRead(Ppin6);
+  angle1=(180./1023.)*readVal1;
+  angle2=(180./1023.)*readVal2;
+  angle3=(180./1023.)*readVal3;
+  angle4=(180./1023.)*readVal4;
+  angle5=(180./1023.)*readVal5;
+  angle6=(180./1023.)*readVal6;
+  pulse1=map(angle1,0,180,servoMIN,servoMAX);
+  pulse2=map(angle2,0,180,servoMIN2,servoMAX2);
+  pulse3=map(angle3,0,180,servoMIN3,servoMAX3);
+  pulse4=map(angle4,0,180,servoMIN,servoMAX);
+  pulse5=map(angle5,0,180,servoMIN,servoMAX);
+  pulse6=map(angle6,0,180,servoMIN6,servoMAX6);
+  Serial.print("Angle1:");
+  Serial.print(angle1);
+  Serial.print(" Angle2:");
+  Serial.print(angle2);
+  Serial.print(" Angle3:");
+  Serial.print(angle3);
+  Serial.print(" Angle4:");
+  Serial.print(angle4);
+  Serial.print(" Angle5:");
+  Serial.print(angle5);
+  Serial.print(" Angle6:");
+  Serial.println(angle6);
+  Serial.println();
+  Serial.print("Pulse1:");
+  Serial.print(pulse1);
+  Serial.print(" Pulse2:");
+  Serial.print(pulse2);
+  Serial.print(" Pulse3:");
+  Serial.print(pulse3);
+  Serial.print(" Pulse4:");
+  Serial.print(pulse4);
+  Serial.print(" Pulse5:");
+  Serial.print(pulse5);
+  Serial.print(" Pulse6:");
+  Serial.println(pulse6);
+  Serial.println();
+  Serial.println();
+  servo=0;
+  Scontroller.setPWM(servo,0,pulse1);
+  servo=4;
+  Scontroller.setPWM(servo,0,pulse2);
+  servo=7;
+  Scontroller.setPWM(servo,0,pulse3);
+  servo=9;
+  Scontroller.setPWM(servo,0,pulse4);
+  servo=12;
+  Scontroller.setPWM(servo,0,pulse5);
+  servo=14;
+  Scontroller.setPWM(servo,0,pulse6);
+}
